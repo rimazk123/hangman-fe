@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useContext } from "react";
 import {
   FormGroup,
   FormControl,
@@ -10,22 +10,12 @@ import {
   Button,
 } from "@material-ui/core";
 import { gameStateInterface, gameInitInterface } from "../hangman";
+import gameStateContext from "../context/gameContext";
 import { socket } from "../modules";
 
-const NewRound = ({
-  gameState,
-  setGameState,
-  roomID,
-  user,
-}: {
-  gameState: gameStateInterface;
-  setGameState: React.Dispatch<
-    React.SetStateAction<gameStateInterface | undefined>
-  >;
-  roomID: string;
-  user: string;
-}) => {
+const NewRound = ({ roomID, user }: { roomID: string; user: string }) => {
   const [started, setStarted] = useState(false);
+  const { gameState, setGameState } = useContext(gameStateContext);
 
   let temp: string;
   if (gameState.time === null) {

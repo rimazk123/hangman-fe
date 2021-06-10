@@ -1,20 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
 import { gameStateInterface } from "../hangman";
 import NewRound from "./NewRound";
 import { Typography } from "@material-ui/core";
-const Standings = ({
-  gameState,
-  setGameState,
-  roomID,
-  user,
-}: {
-  gameState: gameStateInterface;
-  setGameState: React.Dispatch<
-    React.SetStateAction<gameStateInterface | undefined>
-  >;
-  roomID: string;
-  user: string;
-}) => {
+import gameStateContext from "../context/gameContext";
+
+const Standings = ({ roomID, user }: { roomID: string; user: string }) => {
+  const { gameState, setGameState } = useContext(gameStateContext);
   const standings = useRef<string[]>([]);
 
   const places = [
@@ -82,12 +73,7 @@ const Standings = ({
 
       <br />
 
-      <NewRound
-        gameState={gameState}
-        setGameState={setGameState}
-        roomID={roomID}
-        user={user}
-      />
+      <NewRound roomID={roomID} user={user} />
     </div>
   );
 };

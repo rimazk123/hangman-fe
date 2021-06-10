@@ -1,25 +1,27 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useContext,
+} from "react";
 import { gameStateInterface } from "../hangman";
+import gameStateContext from "../context/gameContext";
 import { socket } from "../modules";
 import { InputLabel, TextField, Button, Typography } from "@material-ui/core";
 
 function Wait({
   user,
   roomID,
-  gameState,
-  setGameState,
   setUser,
   mute,
 }: {
   user: string;
   roomID: string;
-  gameState: gameStateInterface;
-  setGameState: React.Dispatch<
-    React.SetStateAction<gameStateInterface | undefined>
-  >;
   setUser: React.Dispatch<React.SetStateAction<string>>;
   mute: boolean;
 }) {
+  const { gameState, setGameState } = useContext(gameStateContext);
   const [formUser, setFormUser] = useState("");
   const [copy, setCopy] = useState("Copy Link");
   const [play, setPlay] = useState(false);

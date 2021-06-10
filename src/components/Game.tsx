@@ -1,10 +1,17 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useContext,
+} from "react";
 import { gameStateInterface } from "../hangman";
 import { FormControl, Input, InputLabel, Typography } from "@material-ui/core";
 import Letters from "./Letters";
 import Timer from "./Timer";
 import "../css/Game.scss";
 import { socket } from "../modules";
+import gameStateContext from "../context/gameContext";
 
 const figureMapping = [
   "none.png",
@@ -21,20 +28,15 @@ const figureMapping = [
 ];
 
 function Game({
-  gameState,
-  setGameState,
   username,
   roomID,
   mute,
 }: {
-  gameState: gameStateInterface;
-  setGameState: React.Dispatch<
-    React.SetStateAction<gameStateInterface | undefined>
-  >;
   username: string;
   roomID: string;
   mute: boolean;
 }) {
+  const { gameState, setGameState } = useContext(gameStateContext);
   const [word, setWord] = useState("");
   const [source, setSource] = useState("");
   const [showScore, setShowScore] = useState(false);
